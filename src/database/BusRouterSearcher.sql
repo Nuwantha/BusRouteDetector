@@ -29,9 +29,6 @@ CREATE TABLE RouteHaltDetail(
 	CONSTRAINT FOREIGN KEY(RouteNo) REFERENCES BusRoute(RouteNo)	
 ) ENGINE=InnoDB;
 
---busRouteTable
-
---galle start
 INSERT INTO BusRoute values("297","Galle","Elpitiya",'66.00','48');
 INSERT INTO BusRoute values("370","Galle","Baddegama",'36','19.2');
 INSERT INTO BusRoute values("343","Galle","Pilana",'32','14.2');
@@ -39,7 +36,6 @@ INSERT INTO BusRoute values("514","Galle","WakWella",'18','8.2');
 INSERT INTO BusRoute values("529","Galle","Imaduwa",'49','32.8');
 INSERT INTO BusRoute values("350","Galle","Matara",'61','44.3');
 
---matara start
 INSERT INTO BusRoute values("346/1","Matara","Dickwella",'36','20.2');
 
 
@@ -47,7 +43,7 @@ INSERT INTO BusRoute values("346/1","Matara","Dickwella",'36','20.2');
 
 
 
---HaltTable
+
 
 
 INSERT INTO Halt (name) values("SarenthuKade Junc");

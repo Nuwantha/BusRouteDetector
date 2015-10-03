@@ -3,15 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pathbuschooser;
+package Views;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.text.JTextComponent;
+import Controllers.BusRouteChooser;
+import Controllers.PathChooseController;
 
 /**
  *
@@ -26,28 +31,51 @@ public class MainWindow extends javax.swing.JFrame {
         initComponents();
         setTitle("Find your way by bus");
         
-        this.destination_combo.setEditable(true);
+        ArrayList<String> list = new ArrayList();               
+                try {
+                    list=PathChooseController.getAllEndStations("");
+                    list.addAll(PathChooseController.getAllIntermediateStations(""));
+                    Collections.sort(list);
+                } catch (ClassNotFoundException | SQLException ex) {
+                    Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                
+                }
+                
+               // destination_combo.setPopupVisible(true);
+                destination_combo.removeAllItems();
+// ((DefaultComboBoxModel) destination_combo.getModel()).removeAllElements();
+                destination_combo.revalidate();
+                for (String list1 : list) {
+                    destination_combo.addItem(list1);
+                    start_location_combo.addItem(list1);
+                }
+        
+        /*destination_combo.setEditable(true);
         JTextComponent editorSearchDestinationCombo = (JTextComponent) destination_combo.getEditor().getEditorComponent();
-        editorSearchDestinationCombo.addKeyListener(new KeyAdapter() {
+          editorSearchDestinationCombo.addKeyListener(new KeyAdapter() {
 
-            @Override
+           @Override
             public void keyReleased(KeyEvent e) {
                 String item = (String) destination_combo.getEditor().getItem();
                 ArrayList<String> list = new ArrayList();               
                 try {
-                    list=PathChooseController.getAllEndStations(item);
+                    list=PathChooseController.getAllStations(item);
                     list.addAll(PathChooseController.getAllIntermediateStations(item));
                 } catch (ClassNotFoundException | SQLException ex) {
                     Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                
                 }
+                destination_combo.setPopupVisible(true);
+                 ((DefaultComboBoxModel) destination_combo.getModel()).removeAllElements();
+                destination_combo.revalidate();
                 for (String list1 : list) {
                     destination_combo.addItem(list1);
                 }
             }
 
         });
-        
-        this.start_location_combo.setEditable(true);
+        */
+       /** this.start_location_combo.setEditable(true);
         JTextComponent editorSearchStartCombo = (JTextComponent) start_location_combo.getEditor().getEditorComponent();
         start_location_combo.addKeyListener(new KeyAdapter() {
 
@@ -55,16 +83,16 @@ public class MainWindow extends javax.swing.JFrame {
             public void keyReleased(KeyEvent e) {
                 String item = (String) start_location_combo.getEditor().getItem();
                 ArrayList<Object> list = new ArrayList();
-               /* try {
+                try {
                     //select from db and add to combo
 
                 } catch (ClassNotFoundException | SQLException ex) {
                     Logger.getLogger(LandForm.class.getName()).log(Level.SEVERE, null, ex);
-                }*/
+                }
 
             }
 
-        });
+        }); */
        
     }
 
@@ -105,16 +133,24 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(start_location_combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(start_location_combo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel1)))
                 .addContainerGap(53, Short.MAX_VALUE))
         );
 
         jLabel2.setText("Select Destination   :");
 
         search_button.setText("Search Paths");
+        search_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                search_buttonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -134,11 +170,11 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(33, 33, 33)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(destination_combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(search_button))
         );
 
@@ -199,6 +235,11 @@ public class MainWindow extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void search_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search_buttonActionPerformed
+        BusRouteChooser busRouteChooser = new BusRouteChooser();
+        busRouteChooser.getSuitablePath(String.valueOf(start_location_combo.getSelectedItem()),String.valueOf(destination_combo.getSelectedItem()));
+    }//GEN-LAST:event_search_buttonActionPerformed
 
     /**
      * @param args the command line arguments
