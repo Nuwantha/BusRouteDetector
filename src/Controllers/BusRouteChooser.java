@@ -16,7 +16,8 @@ import models.BusRoute;
  * @author DinsuG
  */
 public class BusRouteChooser {
-    public void getSuitablePath(String start,String end){
+
+    public void getSuitablePath(String start, String end) {
         try {
             // TODO code application logic here
             ArrayList<BusRoute> directBusRoute = PathChooseController.getDirectBusRoute(start, end);
@@ -24,10 +25,17 @@ public class BusRouteChooser {
                 for (BusRoute directBusRoute1 : directBusRoute) {
                     System.out.println(directBusRoute1.getRoute_num() + "," + directBusRoute1.getStart_location() + "," + directBusRoute1.getEnd_location() + "," + directBusRoute1.getBus_fare() + "," + directBusRoute1.getDistance());
                 }
-            }else{
-                System.out.println("no result");
+            } else {
+                directBusRoute = PathChooseController.getDirectBusRoute(end, start);
+                if (directBusRoute != null) {
+                    for (BusRoute directBusRoute1 : directBusRoute) {
+                        System.out.println(directBusRoute1.getRoute_num() + "," + directBusRoute1.getEnd_location() + "," + directBusRoute1.getStart_location() + "," + directBusRoute1.getBus_fare() + "," + directBusRoute1.getDistance());
+                    }
+                } else {
+                    System.out.println("no result");
+                }
             }
-            
+
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(BusRouteChooser.class.getName()).log(Level.SEVERE, null, ex);
         }
