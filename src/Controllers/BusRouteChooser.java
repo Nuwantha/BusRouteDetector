@@ -111,18 +111,30 @@ public class BusRouteChooser {
                                 for (String route_num1 : route_num) {
                                     new_route_num.add(route_num1);
                                 }
+                                
                                 new_route_num.add(routeOfHalt1);
                                 
                                 ArrayList<String> new_start_location=new ArrayList<>();
                                 for (String start_location1 :start_location) {
                                     new_start_location.add(start_location1);
                                 }
+                                
                                 new_start_location.add(busRouteDetail.getStart_location());
                                 RouteHaltdetail routeDetailOfHalt = PathChooseController.getRouteDetailOfHalt(parser.getStart_location().get(parser.getStart_location().size()-1), routeOfHalt1);
                                 Parser newparser = new Parser(new_route_num, new_start_location,parser.getEnd_location(), routeDetailOfHalt.getBusFair(),routeDetailOfHalt.getDistance());
                                 BusRouteChooser busRouteChooser = new BusRouteChooser();
                                 busRouteChooser.getSuitablePath(newparser);
                                 
+                                
+                                ArrayList<String> new_start_location_byend=new ArrayList<>();
+                                for (String start_location1 :start_location) {
+                                    new_start_location_byend.add(start_location1);
+                                }
+                                
+                                new_start_location_byend.add(busRouteDetail.getEnd_location());
+                                Parser newparser2 = new Parser(new_route_num, new_start_location_byend,parser.getEnd_location(), busRouteDetail.getBus_fare()-routeDetailOfHalt.getBusFair(),busRouteDetail.getDistance()-routeDetailOfHalt.getDistance());
+                                BusRouteChooser busRouteChooser1 = new BusRouteChooser();
+                                busRouteChooser1.getSuitablePath(newparser2);
                                 
                                 
                               
