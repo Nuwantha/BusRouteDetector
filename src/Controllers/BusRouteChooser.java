@@ -33,10 +33,10 @@ public class BusRouteChooser {
                 }
                 for (BusRoute directBusRoute1 : directBusRoute) {
                     System.out.println(directBusRoute1.getRoute_num() + "," + directBusRoute1.getStart_location() + "," + directBusRoute1.getEnd_location());
-                    System.out.println("Distance : " + (parser.getDistance()+directBusRoute1.getDistance()));
-                    System.out.println("BusFair : " + (parser.getBus_fare()+directBusRoute1.getBus_fare()));
+                    System.out.println("Distance : " + (parser.getDistance() + directBusRoute1.getDistance()));
+                    System.out.println("BusFair : " + (parser.getBus_fare() + directBusRoute1.getBus_fare()));
                 }
-                
+
                 System.out.println("close");
                 return;
             } else {
@@ -54,11 +54,18 @@ public class BusRouteChooser {
                             //System.out.println("route nuimber" +routeNumber +"  "+parser.getStart_location().get(parser.getStart_location().size() - 1));
                             ArrayList<RouteHaltdetail> suitableHalt = PathChooseController.getSuitableHalt(routeNumber, parser.getEnd_location());
                             if (suitableHalt != null) {
+                                ArrayList<String> route_num = parser.getRoute_num();
+                                for (String route_num1 : route_num) {
+                                    BusRoute busRouteDetail = PathChooseController.getBusRouteDetail(route_num1);
+                                    System.out.println(busRouteDetail.getRoute_num() + "," + busRouteDetail.getStart_location() + "," + busRouteDetail.getEnd_location());
+
+                                }
                                 System.out.print(routeNumber + " ");
                                 for (int i = 0; i < suitableHalt.size(); i++) {
                                     System.out.print(", " + suitableHalt.get(i).getHaltName() + " ");
                                 }
-                                System.out.println(" ," + suitableHalt.get(suitableHalt.size() - 1).getDistance() + " ," + suitableHalt.get(suitableHalt.size() - 1).getBusFair());
+                                System.out.println("");
+                                System.out.println("Distance : " + (suitableHalt.get(suitableHalt.size() - 1).getDistance()+parser.getDistance()) + " BusFair : " + (suitableHalt.get(suitableHalt.size() - 1).getBusFair()+parser.getBus_fare()));
 
                             } else {
                                 if (parser.getCalling_Time() < 1) {
@@ -72,7 +79,7 @@ public class BusRouteChooser {
                                     }
                                     list.add(routeNumber);
                                     // System.out.println(route_num_tem.size());
-                                    
+
                                     ArrayList<String> start_location_list = new ArrayList<>();
                                     ArrayList<String> start_location = parser.getStart_location();
                                     for (String start_location1 : start_location) {
