@@ -98,8 +98,39 @@ public class BusRouteChooser {
                                 }
                             }
                         }
-                    } else {//System.out.println("calling time ");
-
+                    } else {
+                        if(parser.getCalling_Time()<1){
+                            
+                            ArrayList<String> routeOfHalt = PathChooseController.getRouteOfHalt(parser.getStart_location().get(parser.getStart_location().size()-1));
+                            for (String routeOfHalt1 : routeOfHalt) {
+                                BusRoute busRouteDetail = PathChooseController.getBusRouteDetail(routeOfHalt1);
+                                ArrayList<String> start_location = parser.getStart_location();
+                                ArrayList<String> route_num = parser.getRoute_num();
+                                
+                                ArrayList<String> new_route_num=new ArrayList<>();
+                                for (String route_num1 : route_num) {
+                                    new_route_num.add(route_num1);
+                                }
+                                new_route_num.add(routeOfHalt1);
+                                
+                                ArrayList<String> new_start_location=new ArrayList<>();
+                                for (String start_location1 :start_location) {
+                                    new_start_location.add(start_location1);
+                                }
+                                new_start_location.add(busRouteDetail.getStart_location());
+                                RouteHaltdetail routeDetailOfHalt = PathChooseController.getRouteDetailOfHalt(parser.getStart_location().get(parser.getStart_location().size()-1), routeOfHalt1);
+                                Parser newparser = new Parser(new_route_num, new_start_location,parser.getEnd_location(), routeDetailOfHalt.getBusFair(),routeDetailOfHalt.getDistance());
+                                BusRouteChooser busRouteChooser = new BusRouteChooser();
+                                busRouteChooser.getSuitablePath(newparser);
+                                
+                                
+                                
+                              
+                                
+                            }
+                        
+                        }
+                        
                     }
 
                 }
