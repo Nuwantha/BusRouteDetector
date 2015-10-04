@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import models.BusRoute;
+import models.RouteHaltdetail;
 
 /**
  *
@@ -91,4 +92,63 @@ public class PathChooseController {
         return halt_list;
     }
 
+    public static ArrayList<String> getRouteNumbers(String location) throws ClassNotFoundException, SQLException {
+        Connection conn = DBConnection.getDBConnection().getConnection();
+        String sql = "select distinct routeno from busroute where startLocation='" + location + "'";
+        ResultSet rst = DBHandler.getData(conn, sql);
+        ArrayList<String> route_list = new ArrayList<>();
+        while (rst.next()) {
+            route_list.add(rst.getString("routeNo"));
+        }
+        if (route_list.isEmpty()) {
+            return null;
+        } else {
+            return route_list;
+        }
+    }
+    
+    public static ArrayList<RouteHaltdetail> getSuitableHalt(String routeNo,String endLocation) throws ClassNotFoundException, SQLException {
+        Connection conn = DBConnection.getDBConnection().getConnection();
+        String sql = "select * from halt natural join routehaltdetail where routeno='"+routeNo+"' and distance <= (select distance from halt natural join routehaltdetail where routeno='"+routeNo+"' and name='"+endLocation+"')";
+        ResultSet rst = DBHandler.getData(conn, sql);
+        ArrayList<RouteHaltdetail> halt_list = new ArrayList<>();
+        while (rst.next()) {
+            RouteHaltdetail routeHaltdetail = new RouteHaltdetail(rst.getString("routeNo"),rst.getInt("HaltNo"),rst.getString("Name"), rst.getDouble("distance"),rst.getDouble("busFair"));
+            halt_list.add(routeHaltdetail);
+        }
+        if (halt_list.isEmpty()) {
+            return null;
+        } else {
+            return halt_list;
+        }
+    }
+   
+    public static String getEndLocationOfTheRoute(String routeNo) throws ClassNotFoundException, SQLException {
+        Connection conn = DBConnection.getDBConnection().getConnection();
+        String sql = "select endLocation from busRoute where routeNo='"+routeNo+"'";
+        ResultSet rst = DBHandler.getData(conn, sql);
+        if(rst.next()) {
+            return rst.getString("endLocation");
+        }else{
+            return null;
+        }
+        
+        
+        
+    }
+   
+      public static BusRoute getBusRouteDetail(String routeNo) throws ClassNotFoundException, SQLException {
+        Connection conn = DBConnection.getDBConnection().getConnection();
+        String sql = "Select * from BusRoute where routeNo = '"+routeNo+"'";
+        ResultSet rst = DBHandler.getData(conn, sql);
+        if (rst.next()) {
+            BusRoute busRoute = new BusRoute(rst.getString("routeno"), rst.getString("startlocation"), rst.getString("endlocation"), rst.getDouble("busfair"), rst.getDouble("distance"));
+            return busRoute;
+        }else{
+            return null;
+        }
+    }
+    
+
+    
 }

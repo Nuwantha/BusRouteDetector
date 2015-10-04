@@ -113,10 +113,8 @@ INSERT INTO Halt (name) values("Pathegama Junc");
 INSERT INTO Halt (name) values("Hundeniya");
 INSERT INTO Halt (name) values("Polgahamula");
 
---RouteHaltDetail
 
---baddegama
-INSERT INTO RouteHaltDetail values("370",'1','8','2');
+INSERT INTO RouteHaltDetail values('370','1','8','2');
 INSERT INTO RouteHaltDetail values('370','2','12','3.6');
 INSERT INTO RouteHaltDetail values('370','3','15','5.3');
 INSERT INTO RouteHaltDetail values('370','4','18','7.5');
@@ -126,7 +124,6 @@ INSERT INTO RouteHaltDetail values('370','7','30','13.5');
 INSERT INTO RouteHaltDetail values('370','8','32','15.6');
 INSERT INTO RouteHaltDetail values('370','9','34','17.3');
 
---pilana
 INSERT INTO RouteHaltDetail values('343','10','8','1.7');
 INSERT INTO RouteHaltDetail values('343','11','12','3.2');
 INSERT INTO RouteHaltDetail values('343','12','15','5.3');
@@ -135,65 +132,58 @@ INSERT INTO RouteHaltDetail values('343','14','22','8.8');
 INSERT INTO RouteHaltDetail values('343','15','26','10.7');
 INSERT INTO RouteHaltDetail values('343','16','30','12');
 
---wakwella
 INSERT INTO RouteHaltDetail values('514','17','8','2');
 INSERT INTO RouteHaltDetail values('514','18','12','3.6');
 INSERT INTO RouteHaltDetail values('514','19','15','5.6');
 
-
---imaduwa
 INSERT INTO RouteHaltDetail values('529','10','8','1.7');
-INSERT INTO RouteHaltDetail values('529','20','12','2.9');
-INSERT INTO RouteHaltDetail values('529','21','15','4.7');
-INSERT INTO RouteHaltDetail values('529','22','18','7.2');
-INSERT INTO RouteHaltDetail values('529','23','22','9.7');
-INSERT INTO RouteHaltDetail values('529','24','26','12.5');
-INSERT INTO RouteHaltDetail values('529','25','30','14.4');
-INSERT INTO RouteHaltDetail values('529','26','32','16.5');
-INSERT INTO RouteHaltDetail values('529','27','34','18.2');
-INSERT INTO RouteHaltDetail values('529','28','36','20.7');
-INSERT INTO RouteHaltDetail values('529','29','38','22.5');
-INSERT INTO RouteHaltDetail values('529','30','40','24.7');
-INSERT INTO RouteHaltDetail values('529','31','42','26.8');
-INSERT INTO RouteHaltDetail values('529','32','44','29.1');
-INSERT INTO RouteHaltDetail values('529','33','47','31.7');
-
-
-
---matara
+INSERT INTO RouteHaltDetail values('529','21','12','2.9');
+INSERT INTO RouteHaltDetail values('529','22','15','4.7');
+INSERT INTO RouteHaltDetail values('529','23','18','7.2');
+INSERT INTO RouteHaltDetail values('529','24','22','9.7');
+INSERT INTO RouteHaltDetail values('529','25','26','12.5');
+INSERT INTO RouteHaltDetail values('529','26','30','14.4');
+INSERT INTO RouteHaltDetail values('529','27','32','16.5');
+INSERT INTO RouteHaltDetail values('529','28','34','18.2');
+INSERT INTO RouteHaltDetail values('529','29','36','20.7');
+INSERT INTO RouteHaltDetail values('529','30','38','22.5');
+INSERT INTO RouteHaltDetail values('529','31','40','24.7');
+INSERT INTO RouteHaltDetail values('529','32','42','26.8');
+INSERT INTO RouteHaltDetail values('529','33','44','29.1');
+INSERT INTO RouteHaltDetail values('529','34','47','31.7');
 
 
 INSERT INTO RouteHaltDetail values('350','10','8','1.7');
-INSERT INTO RouteHaltDetail values('350','20','12','2.9');
-INSERT INTO RouteHaltDetail values('350','21','15','4.7');
-INSERT INTO RouteHaltDetail values('350','22','18','7.2');
-INSERT INTO RouteHaltDetail values('350','23','22','9.7');
-INSERT INTO RouteHaltDetail values('350','24','26','12.5');
-INSERT INTO RouteHaltDetail values('350','25','30','14.4');
-INSERT INTO RouteHaltDetail values('350','26','32','16.5');
-INSERT INTO RouteHaltDetail values('350','34','34','17.7');
-INSERT INTO RouteHaltDetail values('350','35','36','19.5');
-INSERT INTO RouteHaltDetail values('350','36','38','20.9');
-INSERT INTO RouteHaltDetail values('350','37','40','22.4');
-INSERT INTO RouteHaltDetail values('350','38','42','24.7');
-INSERT INTO RouteHaltDetail values('350','39','44','27.7');
-INSERT INTO RouteHaltDetail values('350','40','47','29.2');
-INSERT INTO RouteHaltDetail values('350','41','49','30.9');
-INSERT INTO RouteHaltDetail values('350','42','52','32.9');
-INSERT INTO RouteHaltDetail values('350','43','53','35.6');
-INSERT INTO RouteHaltDetail values('350','44','55','37.6');
-INSERT INTO RouteHaltDetail values('350','45','57','39.9');
-INSERT INTO RouteHaltDetail values('350','46','59','42.4');
+INSERT INTO RouteHaltDetail values('350','21','12','2.9');
+INSERT INTO RouteHaltDetail values('350','22','15','4.7');
+INSERT INTO RouteHaltDetail values('350','23','18','7.2');
+INSERT INTO RouteHaltDetail values('350','24','22','9.7');
+INSERT INTO RouteHaltDetail values('350','25','26','12.5');
+INSERT INTO RouteHaltDetail values('350','26','30','14.4');
+INSERT INTO RouteHaltDetail values('350','27','32','16.5');
+INSERT INTO RouteHaltDetail values('350','35','34','17.7');
+INSERT INTO RouteHaltDetail values('350','36','36','19.5');
+INSERT INTO RouteHaltDetail values('350','37','38','20.9');
+INSERT INTO RouteHaltDetail values('350','38','40','22.4');
+INSERT INTO RouteHaltDetail values('350','39','42','24.7');
+INSERT INTO RouteHaltDetail values('350','40','44','27.7');
+INSERT INTO RouteHaltDetail values('350','41','47','29.2');
+INSERT INTO RouteHaltDetail values('350','42','49','30.9');
+INSERT INTO RouteHaltDetail values('350','43','52','32.9');
+INSERT INTO RouteHaltDetail values('350','44','53','35.6');
+INSERT INTO RouteHaltDetail values('350','45','55','37.6');
+INSERT INTO RouteHaltDetail values('350','46','57','39.9');
+INSERT INTO RouteHaltDetail values('350','47','59','42.4');
 
 
-INSERT INTO RouteHaltDetail values('346/1','47','8','1.7');
-INSERT INTO RouteHaltDetail values('346/1','48','12','3.5');
-INSERT INTO RouteHaltDetail values('346/1','49','15','5.6');
-INSERT INTO RouteHaltDetail values('346/1','50','18','7.6');
-INSERT INTO RouteHaltDetail values('346/1','51','22','8.7');
-INSERT INTO RouteHaltDetail values('346/1','52','26','11.7');
-INSERT INTO RouteHaltDetail values('346/1','53','30','13.7');
-INSERT INTO RouteHaltDetail values('346/1','54','32','15.5');
-INSERT INTO RouteHaltDetail values('346/1','55','34','17.5');
+INSERT INTO RouteHaltDetail values('346/1','48','8','1.7');
+INSERT INTO RouteHaltDetail values('346/1','49','12','3.5');
+INSERT INTO RouteHaltDetail values('346/1','50','15','5.6');
+INSERT INTO RouteHaltDetail values('346/1','51','18','7.6');
+INSERT INTO RouteHaltDetail values('346/1','52','22','8.7');
+INSERT INTO RouteHaltDetail values('346/1','53','26','11.7');
+INSERT INTO RouteHaltDetail values('346/1','54','30','13.7');
+INSERT INTO RouteHaltDetail values('346/1','55','32','15.5');
+INSERT INTO RouteHaltDetail values('346/1','56','34','17.5');
 
 

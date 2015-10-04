@@ -9,16 +9,24 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Gimhani
+ * @author DinsuG
  */
-public class BusRoute {
-    private String route_num;
-    private String start_location;
+public class Parser {
+    private ArrayList<String> route_num;
+    private ArrayList<String> start_location;
     private String end_location;
+
+    public int getCalling_Time() {
+        return calling_Time;
+    }
+
+    public void setCalling_Time(int calling_Time) {
+        this.calling_Time = calling_Time;
+    }
     private double bus_fare;
     private double distance;
-    private ArrayList<RouteHaltdetail> haltDetail;
-    public BusRoute(String route_num, String start_location, String end_location, double bus_fare, double distance) {
+private int calling_Time=0;
+    public Parser(ArrayList<String> route_num, ArrayList<String> start_location, String end_location, double bus_fare, double distance) {
         this.route_num = route_num;
         this.start_location = start_location;
         this.end_location = end_location;
@@ -26,38 +34,19 @@ public class BusRoute {
         this.distance = distance;
     }
 
-    public BusRoute(String route_num, String start_location, String end_location, double bus_fare, double distance, ArrayList<RouteHaltdetail> haltDetail) {
-        this.route_num = route_num;
-        this.start_location = start_location;
-        this.end_location = end_location;
-        this.bus_fare = bus_fare;
-        this.distance = distance;
-        this.haltDetail = haltDetail;
-    }
-
-    public ArrayList<RouteHaltdetail> getHaltDetail() {
-        return haltDetail;
-    }
-
-    public void setHaltDetail(ArrayList<RouteHaltdetail> haltDetail) {
-        this.haltDetail = haltDetail;
-    }
-    
-    
-    
-    public String getRoute_num() {
+    public ArrayList<String> getRoute_num() {
         return route_num;
     }
 
-    public void setRoute_num(String route_num) {
+    public void setRoute_num(ArrayList<String> route_num) {
         this.route_num = route_num;
     }
 
-    public String getStart_location() {
+    public ArrayList<String> getStart_location() {
         return start_location;
     }
 
-    public void setStart_location(String start_location) {
+    public void setStart_location(ArrayList<String> start_location) {
         this.start_location = start_location;
     }
 
@@ -84,7 +73,5 @@ public class BusRoute {
     public void setDistance(double distance) {
         this.distance = distance;
     }
-    
-    
     
 }

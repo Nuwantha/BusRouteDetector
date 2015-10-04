@@ -17,6 +17,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.text.JTextComponent;
 import Controllers.BusRouteChooser;
 import Controllers.PathChooseController;
+import models.Parser;
 
 /**
  *
@@ -238,7 +239,14 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void search_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search_buttonActionPerformed
         BusRouteChooser busRouteChooser = new BusRouteChooser();
-        busRouteChooser.getSuitablePath(String.valueOf(start_location_combo.getSelectedItem()),String.valueOf(destination_combo.getSelectedItem()));
+        ArrayList<String> start=new ArrayList<>();
+        start.add(String.valueOf(start_location_combo.getSelectedItem()));
+        ArrayList<String> routeNo=new ArrayList<>();
+       
+        
+        
+        Parser parser = new Parser(routeNo,start,String.valueOf(destination_combo.getSelectedItem()), 0,0);
+        busRouteChooser.getSuitablePath(parser);
     }//GEN-LAST:event_search_buttonActionPerformed
 
     /**
