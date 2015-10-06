@@ -9,8 +9,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTextArea;
 import models.BusRoute;
-import models.Parser;
+import models.Passer;
 import models.RouteHaltdetail;
 
 /**
@@ -19,67 +20,95 @@ import models.RouteHaltdetail;
  */
 public class BusRouteChooser {
 
-    public void getSuitablePath(Parser parser) {
+    public JTextArea textArea = null;
+
+    public void getSuitablePath(Passer parser) {
+        String return_string = "===================================================\n"; //the string to be returned by this method
+
         try {
-            // TODO code application logic here
+
+            //check whether both station are  same
+            if (parser.getEnd_location().equals(parser.getStart_location().get(parser.getStart_location().size() - 1))) {
+                return_string += "You have entered both start and destination as same name!";
+                textArea.append(return_string);
+                return;
+            }
+
+            //chech whether you want to go from stat location to end station
             ArrayList<BusRoute> directBusRoute = PathChooseController.getDirectBusRoute(parser.getStart_location().get(parser.getStart_location().size() - 1), parser.getEnd_location());
             if (directBusRoute != null) {
-                System.out.println("open");
                 ArrayList<String> route_num = parser.getRoute_num();
                 for (String route_num1 : route_num) {
                     BusRoute busRouteDetail = PathChooseController.getBusRouteDetail(route_num1);
-                    System.out.println(busRouteDetail.getRoute_num() + "," + busRouteDetail.getStart_location() + "," + busRouteDetail.getEnd_location());
+                    return_string += (busRouteDetail.getRoute_num() + "," + busRouteDetail.getStart_location() + "," + busRouteDetail.getEnd_location() + "\n");
 
                 }
                 for (BusRoute directBusRoute1 : directBusRoute) {
-                    System.out.println(directBusRoute1.getRoute_num() + "," + directBusRoute1.getStart_location() + "," + directBusRoute1.getEnd_location());
-                    System.out.println("Distance : " + (parser.getDistance() + directBusRoute1.getDistance()));
-                    System.out.println("BusFair : " + (parser.getBus_fare() + directBusRoute1.getBus_fare()));
+                    return_string += (directBusRoute1.getRoute_num() + "," + directBusRoute1.getStart_location() + "," + directBusRoute1.getEnd_location() + "\n");
+                    return_string += ("Distance : " + (parser.getDistance() + directBusRoute1.getDistance()) + "\n");
+                    return_string += ("BusFair : " + (parser.getBus_fare() + directBusRoute1.getBus_fare()) + "\n");
                 }
 
-                System.out.println("close");
-                return;
+                textArea.append(return_string);
+
             } else {
+
+                //chech whether you want to go from end location to start station
                 directBusRoute = PathChooseController.getDirectBusRoute(parser.getEnd_location(), parser.getStart_location().get(parser.getStart_location().size() - 1));
-                //System.out.println("2 athula");
                 if (directBusRoute != null) {
-                    for (BusRoute directBusRoute1 : directBusRoute) {
-                        System.out.println(directBusRoute1.getRoute_num() + "," + directBusRoute1.getEnd_location() + "," + directBusRoute1.getStart_location() + "," + directBusRoute1.getBus_fare() + "," + directBusRoute1.getDistance());
+                    ArrayList<String> route_num = parser.getRoute_num();
+                    for (String route_num1 : route_num) {
+                        BusRoute busRouteDetail = PathChooseController.getBusRouteDetail(route_num1);
+                        return_string += (busRouteDetail.getRoute_num() + "," + busRouteDetail.getStart_location() + "," + busRouteDetail.getEnd_location() + "\n");
+
                     }
+                    for (BusRoute directBusRoute1 : directBusRoute) {
+                        return_string += (directBusRoute1.getRoute_num() + "," + directBusRoute1.getStart_location() + "," + directBusRoute1.getEnd_location() + "\n");
+                        return_string += ("Distance : " + (parser.getDistance() + directBusRoute1.getDistance()) + "\n");
+                        return_string += ("BusFair : " + (parser.getBus_fare() + directBusRoute1.getBus_fare()) + "\n");
+                    }
+
+                    textArea.append(return_string);
+
+                    //for (BusRoute directBusRoute1 : directBusRoute) {
+                      //  return_string += (directBusRoute1.getRoute_num() + "," + directBusRoute1.getEnd_location() + "," + directBusRoute1.getStart_location() + "," + directBusRoute1.getBus_fare() + "," + directBusRoute1.getDistance() + "\n");
+                    //}
                 } else {
+                    //check for an intermediate halt stating from a start station
                     ArrayList<String> routeNumbers = PathChooseController.getRouteNumbers(parser.getStart_location().get(parser.getStart_location().size() - 1));
+                    
+                    //ArrayList<String> routeNumbers2 = PathChooseController.getRouteNumbers(parser.getEnd_location());
                     if (routeNumbers != null) {
-                        //get all route start from galle                
+                                        
                         for (String routeNumber : routeNumbers) {
-                            //System.out.println("route nuimber" +routeNumber +"  "+parser.getStart_location().get(parser.getStart_location().size() - 1));
+                            //return_string+=("route nuimber" +routeNumber +"  "+parser.getStart_location().get(parser.getStart_location().size() - 1));
+                           
                             ArrayList<RouteHaltdetail> suitableHalt = PathChooseController.getSuitableHalt(routeNumber, parser.getEnd_location());
                             if (suitableHalt != null) {
+                                textArea.append("Hai ");
+                                
                                 ArrayList<String> route_num = parser.getRoute_num();
                                 for (String route_num1 : route_num) {
                                     BusRoute busRouteDetail = PathChooseController.getBusRouteDetail(route_num1);
-                                    System.out.println(busRouteDetail.getRoute_num() + "," + busRouteDetail.getStart_location() + "," + busRouteDetail.getEnd_location());
+                                    return_string += (busRouteDetail.getRoute_num() + "," + busRouteDetail.getStart_location() + "," + busRouteDetail.getEnd_location() + "\n");
 
                                 }
-                                System.out.print(routeNumber + " ");
+                                return_string += (routeNumber + " ");
                                 for (int i = 0; i < suitableHalt.size(); i++) {
-                                    System.out.print(", " + suitableHalt.get(i).getHaltName() + " ");
+                                    return_string += (", " + suitableHalt.get(i).getHaltName() + " ");
                                 }
-                                System.out.println("");
-                                System.out.println("Distance : " + (suitableHalt.get(suitableHalt.size() - 1).getDistance()+parser.getDistance()) + " BusFair : " + (suitableHalt.get(suitableHalt.size() - 1).getBusFair()+parser.getBus_fare()));
-
+                                return_string += ("\n");
+                                return_string += ("Distance : " + (suitableHalt.get(suitableHalt.size() - 1).getDistance() + parser.getDistance()) + "\n BusFair : " + (suitableHalt.get(suitableHalt.size() - 1).getBusFair() + parser.getBus_fare()) + "\n");
+                                textArea.append(return_string);
                             } else {
                                 if (parser.getCalling_Time() < 1) {
-                                    //System.out.println("dffff");
 
                                     ArrayList<String> route_num_tem = parser.getRoute_num();
-                                    //route_num_tem.add(routeNumber);
                                     ArrayList<String> list = new ArrayList<>();
                                     for (String route_num : route_num_tem) {
                                         list.add(route_num);
                                     }
                                     list.add(routeNumber);
-                                    // System.out.println(route_num_tem.size());
-
                                     ArrayList<String> start_location_list = new ArrayList<>();
                                     ArrayList<String> start_location = parser.getStart_location();
                                     for (String start_location1 : start_location) {
@@ -88,63 +117,58 @@ public class BusRouteChooser {
                                     BusRoute busRouteDetail = PathChooseController.getBusRouteDetail(routeNumber);
                                     start_location_list.add(busRouteDetail.getEnd_location());
 
-                                    //System.out.println(start_location.size()); 
-                                    // System.out.println(busRouteDetail.getEnd_location());
-                                    Parser newparser = new Parser(list, start_location_list, parser.getEnd_location(), parser.getBus_fare() + busRouteDetail.getBus_fare(), parser.getBus_fare() + busRouteDetail.getDistance());
+                                    Passer newparser = new Passer(list, start_location_list, parser.getEnd_location(), parser.getBus_fare() + busRouteDetail.getBus_fare(), parser.getBus_fare() + busRouteDetail.getDistance());
 
                                     newparser.setCalling_Time(parser.getCalling_Time() + 1);
-                                    BusRouteChooser busRouteChooser = new BusRouteChooser();
-                                    busRouteChooser.getSuitablePath(newparser);
+                                    getSuitablePath(newparser);
                                 }
                             }
                         }
                     } else {
-                        if(parser.getCalling_Time()<1){
-                            
-                            ArrayList<String> routeOfHalt = PathChooseController.getRouteOfHalt(parser.getStart_location().get(parser.getStart_location().size()-1));
-                            for (String routeOfHalt1 : routeOfHalt) {
-                                BusRoute busRouteDetail = PathChooseController.getBusRouteDetail(routeOfHalt1);
-                                ArrayList<String> start_location = parser.getStart_location();
-                                ArrayList<String> route_num = parser.getRoute_num();
-                                
-                                ArrayList<String> new_route_num=new ArrayList<>();
-                                for (String route_num1 : route_num) {
-                                    new_route_num.add(route_num1);
+                        if (parser.getCalling_Time() < 3) {
+
+                            ArrayList<String> routeOfHalt = PathChooseController.getRouteOfHalt(parser.getStart_location().get(parser.getStart_location().size() - 1));
+                            if (routeOfHalt != null) {
+                                for (String routeOfHalt1 : routeOfHalt) {
+                                    BusRoute busRouteDetail = PathChooseController.getBusRouteDetail(routeOfHalt1);
+                                    ArrayList<String> start_location = parser.getStart_location();
+                                    ArrayList<String> route_num = parser.getRoute_num();
+
+                                    ArrayList<String> new_route_num = new ArrayList<>();
+                                    for (String route_num1 : route_num) {
+                                        new_route_num.add(route_num1);
+                                    }
+
+                                    new_route_num.add(routeOfHalt1);
+
+                                    ArrayList<String> new_start_location = new ArrayList<>();
+                                    for (String start_location1 : start_location) {
+                                        new_start_location.add(start_location1);
+                                    }
+
+                                    new_start_location.add(busRouteDetail.getStart_location());
+                                    RouteHaltdetail routeDetailOfHalt = PathChooseController.getRouteDetailOfHalt(parser.getStart_location().get(parser.getStart_location().size() - 1), routeOfHalt1);
+                                    Passer newparser = new Passer(new_route_num, new_start_location, parser.getEnd_location(), routeDetailOfHalt.getBusFair(), routeDetailOfHalt.getDistance());
+                                    getSuitablePath(newparser);
+
+                                    ArrayList<String> new_start_location_byend = new ArrayList<>();
+                                    for (String start_location1 : start_location) {
+                                        new_start_location_byend.add(start_location1);
+                                    }
+
+                                    new_start_location_byend.add(busRouteDetail.getEnd_location());
+                                    Passer newparser2 = new Passer(new_route_num, new_start_location_byend, parser.getEnd_location(), busRouteDetail.getBus_fare() - routeDetailOfHalt.getBusFair(), busRouteDetail.getDistance() - routeDetailOfHalt.getDistance());
+                                    getSuitablePath(newparser2);
                                 }
-                                
-                                new_route_num.add(routeOfHalt1);
-                                
-                                ArrayList<String> new_start_location=new ArrayList<>();
-                                for (String start_location1 :start_location) {
-                                    new_start_location.add(start_location1);
-                                }
-                                
-                                new_start_location.add(busRouteDetail.getStart_location());
-                                RouteHaltdetail routeDetailOfHalt = PathChooseController.getRouteDetailOfHalt(parser.getStart_location().get(parser.getStart_location().size()-1), routeOfHalt1);
-                                Parser newparser = new Parser(new_route_num, new_start_location,parser.getEnd_location(), routeDetailOfHalt.getBusFair(),routeDetailOfHalt.getDistance());
-                                BusRouteChooser busRouteChooser = new BusRouteChooser();
-                                busRouteChooser.getSuitablePath(newparser);
-                                
-                                
-                                ArrayList<String> new_start_location_byend=new ArrayList<>();
-                                for (String start_location1 :start_location) {
-                                    new_start_location_byend.add(start_location1);
-                                }
-                                
-                                new_start_location_byend.add(busRouteDetail.getEnd_location());
-                                Parser newparser2 = new Parser(new_route_num, new_start_location_byend,parser.getEnd_location(), busRouteDetail.getBus_fare()-routeDetailOfHalt.getBusFair(),busRouteDetail.getDistance()-routeDetailOfHalt.getDistance());
-                                BusRouteChooser busRouteChooser1 = new BusRouteChooser();
-                                busRouteChooser1.getSuitablePath(newparser2);
-                                
-                                
-                              
-                                
+
                             }
-                        
                         }
-                        
+
                     }
 
+                }
+                if (parser != null) {
+                   // textArea.setText(return_string);
                 }
             }
 

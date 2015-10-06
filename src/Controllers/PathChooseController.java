@@ -99,7 +99,14 @@ public class PathChooseController {
         ArrayList<String> route_list = new ArrayList<>();
         while (rst.next()) {
             route_list.add(rst.getString("routeNo"));
+            //System.out.println(rst.getString("routeNo"));
         }
+       // sql = "select distinct routeno from busroute where endLocation='" + location + "'";
+       // rst = DBHandler.getData(conn, sql);
+       // while (rst.next()) {
+         //   route_list.add(rst.getString("routeNo"));
+            //System.err.println(rst.getString("routeNo"));
+        //}
         if (route_list.isEmpty()) {
             return null;
         } else {

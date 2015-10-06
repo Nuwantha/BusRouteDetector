@@ -6,16 +6,29 @@
 package models;
 
 import java.util.ArrayList;
+import javax.swing.JTextArea;
 
 /**
  *
  * @author DinsuG
  */
-public class Parser {
+public class Passer {
+
     private ArrayList<String> route_num;
     private ArrayList<String> start_location;
     private String end_location;
+    private double bus_fare;
+    private double distance;
+    private int calling_Time = 0;
 
+    public Passer(ArrayList<String> route_num, ArrayList<String> start_location, String end_location, double bus_fare, double distance) {
+        this.route_num = route_num;
+        this.start_location = start_location;
+        this.end_location = end_location;
+        this.bus_fare = bus_fare;
+        this.distance = distance;
+    }
+    
     public int getCalling_Time() {
         return calling_Time;
     }
@@ -23,17 +36,7 @@ public class Parser {
     public void setCalling_Time(int calling_Time) {
         this.calling_Time = calling_Time;
     }
-    private double bus_fare;
-    private double distance;
-private int calling_Time=0;
-    public Parser(ArrayList<String> route_num, ArrayList<String> start_location, String end_location, double bus_fare, double distance) {
-        this.route_num = route_num;
-        this.start_location = start_location;
-        this.end_location = end_location;
-        this.bus_fare = bus_fare;
-        this.distance = distance;
-    }
-
+    
     public ArrayList<String> getRoute_num() {
         return route_num;
     }
@@ -73,5 +76,5 @@ private int calling_Time=0;
     public void setDistance(double distance) {
         this.distance = distance;
     }
-    
+
 }
